@@ -24,6 +24,7 @@ saveBtn.addEventListener("click", function () {
     tableEl.innerHTML = ""
     for (let date in values) {
         let first = true
+        let total = values[date].length
 
         for (let name of values[date]) {
             if (first) {
@@ -31,6 +32,7 @@ saveBtn.addEventListener("click", function () {
                 <tr>
                     <td>${date}</td>
                     <td>${name}</td>
+                    <td>${total}</td>
                 </tr>
                 `
 
@@ -40,6 +42,7 @@ saveBtn.addEventListener("click", function () {
                 <tr>
                     <td></td>
                     <td>${name}</td>
+                    <td></td>
                 </tr>
                 `
             }
