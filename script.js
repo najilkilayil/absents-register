@@ -4,23 +4,13 @@ let textEl = document.getElementById("name-el")
 let saveBtn = document.getElementById("save-btn")
 let tableEl = document.getElementById("table-el")
 
-let values = {}
+let values = JSON.parse(localStorage.getItem("values"))
 
-saveBtn.addEventListener("click", function () {
-    let date = dateEl.value
-    console.log(date)
+if (values === null) {
+    values = {}
+}
 
-    let name = textEl.value
-    console.log(name)
-
-    if (!values[date]) {
-        values[date] = []
-    }
-
-    values[date].push(name)
-
-    textEl.value = ""
-
+function render() {
     tableEl.innerHTML = ""
     for (let date in values) {
         let first = true
@@ -29,7 +19,7 @@ saveBtn.addEventListener("click", function () {
         for (let name of values[date]) {
             if (first) {
                 tableEl.innerHTML += `
-                <tr>
+                <tr id="tr-main">
                     <td>${date}</td>
                     <td>${name}</td>
                     <td>${total}</td>
@@ -48,4 +38,28 @@ saveBtn.addEventListener("click", function () {
             }
         }
     }
+}
+
+saveBtn.addEventListener("click", function () {
+    let date = dateEl.value
+    console.log(date)
+
+    let name = textEl.value
+    console.log(name)
+
+    if (!values[date]) {
+        values[date] = []
+    }
+
+    if ( date === "" || name === "" ) {
+        alert("Please enter date and student name!")
+        return
+    }
+
+    values[date].push(name)
+
+    localStorage.setItem("values", JSON.stringify(values))
+    render()
+    textEl.value = ""
 })
+render()
